@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document Chatbot</title>
+</head>
+<body>
+
+<h2>Upload Document</h2>
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="file" multiple>
+    <button>Upload</button>
+</form>
+
+<h2>Ask Question</h2>
+<input id="q" placeholder="Ask something...">
+<button onclick="ask()">Ask</button>
+
+<pre id="ans"></pre>
+
+<script>
+function ask(){
+  fetch("/ask", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({query: q.value})
+  })
+  .then(res=>res.json())
+  .then(data=>ans.innerText = data.answer)
+}
+</script>
+
+</body>
+</html>
